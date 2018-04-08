@@ -1,14 +1,112 @@
+<!DOCTYPE html>
 <html>
    <body>
-
-   <script type="text/javascript">
-
-       name = prompt("What is your name?");
-       city = prompt("Where do you live?");
-       alert("Hello " + name + "!  How are things in " + city);
-     
-   </script>
-
+  <style>
+    .userV{
+      color:blue;
+    }
+  </style>
+  <script type="text/javascript">
+      var noun1, noun2, noun3, prlNoun, adj1, adj2,  adj3, adj4, adj5, woman, bodyPart, plrBodyPart;
+      
+      String.prototype.replaceAll = function(search, replacement) {
+          var target = this;
+          return target.split(search).join(replacement);
+      };
+      
+      var fillAndShow = function(){
+        
+        var words = [
+          {name: "noun1", value:"",},
+          {name: "noun2", value:""},
+          {name: "noun3", value:""},
+          {name: "prlNoun", value:""},
+          {name: "adj1", value:""},
+          {name: "adj2", value:""},
+          {name: "adj3", value:""},
+          {name: "adj4", value:""},
+          {name: "adj5", value:""},
+          {name: "woman", value:""},
+          {name: "bodyPart", value:""},
+          {name: "plrBodyPart", value:""}
+        ];
+        
+        var story = "The last time I went to a sleepover a/an {adj1} pillow fight broke out.<br/>" +
+          "Out of nowhere, {woman} grabbed her {adj2}, fluffy {noun1} and began swinging it at anyone close to her.<br/>" +
+          "Soon, everyony in class joined in! At one point I got hit in the back of my {bodyPart}.<br/>" +
+          "As soon as I recovered I tossed my {noun2} at {woman}'s {plrBodyPart} but I missed.<br/>" +
+          "Instead I knocked over an expensive {noun3} and my pillow split open!<br/>" +
+          "{prlNoun} flew everywhere, covering the room in layer of {adj3} feathers.<br/>" +
+          "The fighting stopped and we all broke out in {adj4} laughter.<br/>" +
+          "The fun ended when we realized we had to clean up the {adj5} mess!";
+          
+        for(var i = 0; i < words.length; i++){
+          if(!document.getElementById(words[i].name).value){
+            alert("Come on!\n you gotta fill out everything to have fun!");
+            return;
+          }
+          words[i].value = document.getElementById(words[i].name).value;
+        };
+        
+        for(var i = 0; i < words.length; i++){
+          story = story.replaceAll("{" + words[i].name + "}", "<span class='userV'>" + words[i].value + "</span>");
+        }
+        document.getElementById("story").innerHTML = story;
+      };
+  </script>
+  <p>Fill ou the following form for some fun!</p>
+  <table>
+    <tr>
+      <td><label name="">A noun</label></td>
+      <td><input class="userV" id="noun1" type="text" placeholder="noun"/></td>
+    </tr>
+    <tr>
+      <td><label name="">A noun</label></td>
+      <td><input class="userV" id="noun2" type="text" placeholder="noun"/></td>
+    </tr>
+    <tr>
+      <td><label name="">A noun</label></td>
+      <td><input class="userV" id="noun3" type="text" placeholder="noun"/></td>
+    </tr>
+    <tr>
+      <td><label name="">A plural noun</label></td>
+      <td><input class="userV" id="prlNoun" type="text" placeholder="nouns"/></td>
+    </tr>
+    <tr>
+      <td><label name="">An adjective</label></td>
+      <td><input class="userV" id="adj1" type="text" placeholder="adjective"/></td>
+    </tr>
+    <tr>
+      <td><label name="">An adjective</label></td>
+      <td><input class="userV" id="adj2" type="text" placeholder="adjective"/></td>
+    </tr>
+    <tr>
+      <td><label name="">An adjective</label></td>
+      <td><input class="userV" id="adj3" type="text" placeholder="adjective"/></td>
+    </tr>
+    <tr>
+      <td><label name="">An adjective</label></td>
+      <td><input class="userV" id="adj4" type="text" placeholder="adjective"/></td>
+    </tr>
+    <tr>
+      <td><label name="">An adjective</label></td>
+      <td><input class="userV" id="adj5" type="text" placeholder="adjective"/></td>
+    </tr>
+    <tr>
+      <td><label name="">A woman's name</label></td>
+      <td><input class="userV" id="woman" type="text" placeholder="example: Sarah"/></td>
+    </tr>
+    <tr>
+      <td><label name="">A body part</label></td>
+      <td><input class="userV" id="bodyPart" type="text" placeholder="example: Head"/></td>
+    </tr>
+    <tr>
+      <td><label name="">A body part plural</label></td>
+      <td><input class="userV" id="plrBodyPart" type="text" placeholder="example: Hands"/></td>
+    </tr>
+ </table>
+  <input type="button" onClick="fillAndShow()" value="Click to see the result!"/>
+  <p id="story" ></p>
  </body>
 </html>
 
