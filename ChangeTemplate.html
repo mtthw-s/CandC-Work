@@ -1,0 +1,28 @@
+<html>
+ <!-- This program takes the modulus of an input number -->
+
+ <body>
+
+   <script type="text/javascript">
+     purprice = prompt("Enter amount of purchase","");
+     purprice = parseFloat(purprice);
+
+     collected = prompt("Enter amount collected by customer","");
+     collected = parseFloat(collected);
+
+     change = collected - purprice
+     document.write("amount of change is " + change + "<p>");
+     change = parseInt(change * 100);
+     document.write("the number of pennies in your change is " + change + "<p>");
+
+     dollars = parseInt(change / 100);
+
+     document.write("the number of dollars in your change is " + dollars+ "<p>");
+
+     change = change % 100
+
+     document.write("you still have " + change + " pennies left <p>");
+   
+   </script>
+ </body>
+</html>
