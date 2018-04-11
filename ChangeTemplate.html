@@ -4,24 +4,40 @@
  <body>
 
    <script type="text/javascript">
-     purprice = prompt("Enter amount of purchase","");
-     purprice = parseFloat(purprice);
+    var checkAmount = function(denom, value){
+      if(value%denom)
+    };
+    
+    
+    var purprice, collected, change, fifties, twenties, tens, fives, ones;
+    fifties = { val:50, amount:0 };
+    twenties = { val:20, amount:0 };
+    tens = { val:10, amount:0 };
+    fives = { val:5, amount:0 };
+    ones = { val:1, amount:0 };
+    
+    purprice = prompt("Enter amount of purchase","");
+    purprice = parseFloat(purprice);
 
-     collected = prompt("Enter amount collected by customer","");
-     collected = parseFloat(collected);
+    collected = prompt("Enter amount collected by customer","");
+    collected = parseFloat(collected);
 
-     change = collected - purprice
-     document.write("amount of change is " + change + "<p>");
-     change = parseInt(change * 100);
-     document.write("the number of pennies in your change is " + change + "<p>");
+    change = collected - purprice;
+     
+     
+     
+     
+    document.write("amount of change is " + change + "<p>");
+    change = parseInt(change * 100);
+    document.write("the number of pennies in your change is " + change + "<p>");
 
-     dollars = parseInt(change / 100);
+    dollars = parseInt(change / 100);
 
-     document.write("the number of dollars in your change is " + dollars+ "<p>");
+    document.write("the number of dollars in your change is " + dollars+ "<p>");
 
-     change = change % 100
+    change = change % 100;
 
-     document.write("you still have " + change + " pennies left <p>");
+    document.write("you still have " + change + " pennies left <p>");
    
    </script>
  </body>
