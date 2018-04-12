@@ -5,16 +5,33 @@
 
    <script type="text/javascript">
     var checkAmount = function(denom, value){
-      if(value%denom)
+      var temp = 0;
+      if(!value){
+        return [0, 0];
+      }
+      if(value % denom == 0){
+        temp = value;
+        value = value % denom;
+        return [temp / denom, value];
+      }
+      else if(value % denom > 0){
+        temp = value;
+        value = value % denom;
+        return [Math.floor(temp / denom), value];
+      }
     };
     
     
-    var purprice, collected, change, fifties, twenties, tens, fives, ones;
+    var purprice, collected, change, fifties, twenties, tens, fives, ones, qtrs, dimes, nickels, pennies;
     fifties = { val:50, amount:0 };
     twenties = { val:20, amount:0 };
     tens = { val:10, amount:0 };
     fives = { val:5, amount:0 };
     ones = { val:1, amount:0 };
+    qtrs = { val:.25, amount:0 };
+    dimes = { val:.1, amount:0 };
+    nickels = { val:.05, amount:0 };
+    pennies = { val:.01, amount:0 };
     
     purprice = prompt("Enter amount of purchase","");
     purprice = parseFloat(purprice);
