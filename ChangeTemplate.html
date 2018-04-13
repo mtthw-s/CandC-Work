@@ -4,58 +4,104 @@
  <body>
 
    <script type="text/javascript">
-    var checkAmount = function(denom, value){
-      var temp = 0;
-      if(!value){
-        return [0, 0];
-      }
-      if(value % denom == 0){
-        temp = value;
-        value = value % denom;
-        return [temp / denom, value];
-      }
-      else if(value % denom > 0){
-        temp = value;
-        value = value % denom;
-        return [Math.floor(temp / denom), value];
-      }
+    //for printing the answer object
+    var printAns = function(obj){
+      var tbl = document.getElementById("tblResult");
+      var row = tbl.insertRow(tbl.rows.length);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      cell1.innerHTML = obj.amount;
+      cell2.innerHTML = obj.title;
     };
     
+    var validateInput = function(value) {
+      if(!value.match(/^\d+(?:\.\d{0,2})$/)) {
+        //alert("Bad input value – use the format dd.dd (d = digit)");
+        return false;
+      }
+      return true;
+      
+    };
     
-    var purprice, collected, change, fifties, twenties, tens, fives, ones, qtrs, dimes, nickels, pennies;
-    fifties = { val:50, amount:0 };
-    twenties = { val:20, amount:0 };
-    tens = { val:10, amount:0 };
-    fives = { val:5, amount:0 };
-    ones = { val:1, amount:0 };
-    qtrs = { val:.25, amount:0 };
-    dimes = { val:.1, amount:0 };
-    nickels = { val:.05, amount:0 };
-    pennies = { val:.01, amount:0 };
+    //For rounding the change to the nearest 100th
+    var changeRound = function(num) {
+      return Math.ceil(num * 100) / 100;
+    };
     
-    purprice = prompt("Enter amount of purchase","");
-    purprice = parseFloat(purprice);
-
-    collected = prompt("Enter amount collected by customer","");
-    collected = parseFloat(collected);
-
-    change = collected - purprice;
-     
-     
-     
-     
-    document.write("amount of change is " + change + "<p>");
-    change = parseInt(change * 100);
-    document.write("the number of pennies in your change is " + change + "<p>");
-
-    dollars = parseInt(change / 100);
-
-    document.write("the number of dollars in your change is " + dollars+ "<p>");
-
-    change = change % 100;
-
-    document.write("you still have " + change + " pennies left <p>");
+    var resetResults = function(){
+      document.getElementById("change").innerHTML = "";
+      document.getElementById("tblResult").innerHTML = "";
+    };
+    
+    //The function that makes the program run
+    var getChange = function(){
+      resetResults();
+      
+      //the answer object
+      var ans = {
+        //an array of bill/coin value objects
+        money:
+        [
+          { val:50, amount:0, title:"Fifties" },
+          { val:20, amount:0, title:"Twenties"  },
+          { val:10, amount:0, title:"Tens"  },
+          { val:5, amount:0, title:"Fives"  },
+          { val:1, amount:0, title:"Ones"  },
+          { val:.25, amount:0, title:"Quarters"  },
+          { val:.1, amount:0, title:"Dimes"  },
+          { val:.05, amount:0, title:"Nickels"  },
+          { val:.01, amount:0, title:"Pennies"  }
+        ],
+        change: "",
+        //the function that actually calculates the change
+        getChange: function(){
+          document.getElementById("change").innerHTML = "Change due: " + this.change;
+          //document.write("<p>change due: " + this.change + "</p>");
+          for(var i = 0; i < this.money.length; i++){
+            //temperary varible to hold the value of the change due
+            var temp = 0;
+            //check if there is no change to return to the customer, finish the function if not
+            if(!this.change || this.change < 0){
+              return;
+            }
+            temp = this.change;
+            this.change = this.change % this.money[i].val;
+            this.money[i].amount = Math.floor(temp / this.money[i].val);
+            //check if the money object has a value in amount, print it if it does
+            if(this.money[i].amount > 0){
+              //document.write("<p>" + this.money[i].amount + " " + this.money[i].title +"</p>");
+              printAns(this.money[i]);
+            }
+          }
+        }
+        
+      };
+      
+      var due = document.getElementById("txtDue");
+      var paid = document.getElementById("txtPaid");
+      
+      if(!validateInput(due.value) || !validateInput(paid.value)){
+        alert("Bad input value – use the format dd.dd (d = digit)");
+        return;
+      }
+      ans.change = changeRound(parseFloat(paid.value) - parseFloat(due.value));
+      ans.getChange();
+    };
+    
    
    </script>
+   <table>
+     <tr>
+       <td>Enter the amount due:</td>
+       <td>$<input type="text" id="txtDue" placeholder="example: 12.89" /></td>
+     </tr>
+     <tr>
+       <td>Enter the amount paid:</td>
+       <td>$<input type="text" id="txtPaid" placeholder="example: 12.89" /></td>
+     </tr>
+   </table>
+   <input type="button" value="Get Change Due" onClick="getChange()" />
+   <h3 id="change"></h3>
+   <table id="tblResult"></table>
  </body>
 </html>
