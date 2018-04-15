@@ -1,0 +1,53 @@
+
+<html>
+ <!-- Demo of using and (&&) to check conditions-->
+  <body>
+
+   <script type="text/javascript">
+
+       //ttype = prompt("Enter adult,student, or kid","adult");
+       //coupon = prompt("Do you have a coupon","no");
+       //wed = prompt("Is is Wednesday","no");
+
+       //if (ttype == "adult" && coupon == "yes" && wed == "yes") {
+         //document.write("that will be $3.50 please.");
+       //}
+       var getTotal = function(){
+         
+         var customerObj = {
+           price: 12,
+           age:prompt("Enter adult,student, or kid","adult"),
+           coupon: false,
+           wed: false,
+           discounts: {
+             adult: 0,
+             student:-3,
+             kid: function(){return this.price * -1},
+             wed: function(){return this.price / -2},
+             coupon: -1
+           },
+           calculatePrice: function(){
+             if(this.age == "kid"){
+               this.price += this.discounts.kid();
+               return;
+             }
+             if(this.age == "student"){
+               this.price += this.discounts.student;
+             }
+             if(this.wed){
+               this.price += this.discounts.wed;
+             }
+             if(this.coupon){
+               this.price = this.discounts.coupon;
+             }
+             
+           }
+         };
+         customerObj.calculatePrice();
+       };
+      getTotal();
+     
+   </script>
+
+ </body>
+</html>
