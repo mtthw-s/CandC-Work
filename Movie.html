@@ -1,53 +1,64 @@
-
 <html>
- <!-- Demo of using and (&&) to check conditions-->
+ <!-- Calculates movie ticket price based of 3 pricing parameters-->
   <body>
-
    <script type="text/javascript">
-
-       //ttype = prompt("Enter adult,student, or kid","adult");
-       //coupon = prompt("Do you have a coupon","no");
-       //wed = prompt("Is is Wednesday","no");
-
-       //if (ttype == "adult" && coupon == "yes" && wed == "yes") {
-         //document.write("that will be $3.50 please.");
-       //}
-       var getTotal = function(){
-         
-         var customerObj = {
-           price: 12,
-           age:prompt("Enter adult,student, or kid","adult"),
-           coupon: false,
-           wed: false,
-           discounts: {
-             adult: 0,
-             student:-3,
-             kid: function(){return this.price * -1},
-             wed: function(){return this.price / -2},
-             coupon: -1
-           },
-           calculatePrice: function(){
-             if(this.age == "kid"){
-               this.price += this.discounts.kid();
-               return;
-             }
-             if(this.age == "student"){
-               this.price += this.discounts.student;
-             }
-             if(this.wed){
-               this.price += this.discounts.wed;
-             }
-             if(this.coupon){
-               this.price = this.discounts.coupon;
-             }
-             
-           }
-         };
-         customerObj.calculatePrice();
-       };
-      getTotal();
-     
+      var getTotal = function(){
+        var ansEle, price, wed, coupon
+        ansEle = document.getElementById("ans");
+        price = parseInt(document.getElementById("ddAge").value);
+        if(price == 0){
+          ansEle.innerText = "Total due: $0.00";
+          return;
+        }
+        wed = (document.getElementById("ddDay").value == "true");
+        coupon = (document.getElementById("ddCoupon").value == "true");
+        if(wed){
+          price = price / 2;
+        }
+        if(coupon){
+          price = price - 1
+        }
+        ansEle.innerText = "Total due: $" + (Math.ceil(price * 100) / 100).toFixed(2);
+      };
    </script>
+  <table>
+    <tr>
+      <td>
+        Age:
+      </td>
+      <td>
+        <select id="ddAge">
+          <option value="12">Adult</option>
+          <option value="9">Student</option>
+          <option value="0">Child</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Is it Wednesday?
+      </td>
+      <td>
+        <select id="ddDay">
+          <option value="false" >No</option>
+          <option value="true" >Yes</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Do you have a $1.00 off coupon?
+      </td>
+      <td>
+        <select id="ddCoupon">
+          <option value="false" >No</option>
+          <option value="true" >Yes</option>
+        </select>
+      </td>
+    </tr>
+  </table>
+  <input type="button" value="Calculate total" onClick="getTotal()" />
+  <h3 id="ans"></h3>
 
  </body>
 </html>
