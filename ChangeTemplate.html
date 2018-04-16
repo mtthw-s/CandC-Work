@@ -1,8 +1,6 @@
 <html>
- <!-- This program takes the modulus of an input number -->
-
+ <!-- This script calculates the amount owed (with tax) and denominations of bill/coins -->
  <body>
-
    <script type="text/javascript">
     //for printing the answer object
     var printAns = function(obj){
@@ -13,49 +11,60 @@
       cell1.innerHTML = obj.amount;
       cell2.innerHTML = obj.title;
     };
-    
+    //validates user inputs are in the +dd.dd format
     var validateInput = function(value) {
       if(!value.match(/^\d+(?:\.\d{0,2})$/)) {
-        //alert("Bad input value – use the format dd.dd (d = digit)");
         return false;
       }
       return true;
-      
     };
-    
-    //For rounding the change to the nearest 100th
-    var changeRound = function(num) {
-      return Math.ceil(num * 100) / 100;
-    };
-    
+    //Resets the results table for another calculation
     var resetResults = function(){
       document.getElementById("change").innerHTML = "";
       document.getElementById("tblResult").innerHTML = "";
     };
-    
-    //The function that makes the program run
+	//Function for calculating the amount due
+	var calcTax = function(amount, rate){
+		amount = amount + parseInt((amount * rate) / 100);
+		return amount;
+	};
+	//onFocus lost event after entering the amount due. Gets and displays total after tax is applied
+	var getTotal = function(){
+		var taxRate = 8;
+		var total = document.getElementById("txtDue");
+		if(!validateInput(total.value)){
+			alert("Bad input value – use the format dd.dd (d = digit)");
+			return;
+		}
+		total = parseInt(parseFloat(total.value) * 100);
+		total = calcTax(total, taxRate);
+		document.getElementById("grandTotal").innerText = (total / 100).toFixed(2);//convert back into a dd.dd format for display
+	};
+    //The function that makes the change calculations run
     var getChange = function(){
       resetResults();
-      
       //the answer object
       var ans = {
         //an array of bill/coin value objects
+		//Can easiliy add a new denomination to the array
+		//All values are in cents ie $5 == 5000 cents
+		//Sould have an internal sorting function for ensuring that greatest values are calculated first.  Currentlly a hardcoded order is used
         money:
         [
-          { val:50, amount:0, title:"Fifties" },
-          { val:20, amount:0, title:"Twenties"  },
-          { val:10, amount:0, title:"Tens"  },
-          { val:5, amount:0, title:"Fives"  },
-          { val:1, amount:0, title:"Ones"  },
-          { val:.25, amount:0, title:"Quarters"  },
-          { val:.1, amount:0, title:"Dimes"  },
-          { val:.05, amount:0, title:"Nickels"  },
-          { val:.01, amount:0, title:"Pennies"  }
+          { val:5000, amount:0, title:"Fifties" },
+          { val:2000, amount:0, title:"Twenties"  },
+          { val:1000, amount:0, title:"Tens"  },
+          { val:500, amount:0, title:"Fives"  },
+          { val:100, amount:0, title:"Ones"  },
+          { val:25, amount:0, title:"Quarters"  },
+          { val:10, amount:0, title:"Dimes"  },
+          { val:5, amount:0, title:"Nickels"  },
+          { val:1, amount:0, title:"Pennies"  }
         ],
         change: "",
         //the function that actually calculates the change
         getChange: function(){
-          document.getElementById("change").innerHTML = "Change due: " + this.change;
+          document.getElementById("change").innerHTML = "Change due: " + (this.change / 100).toFixed(2);//convert back into a dd.dd format for display
           //document.write("<p>change due: " + this.change + "</p>");
           for(var i = 0; i < this.money.length; i++){
             //temperary varible to hold the value of the change due
@@ -66,7 +75,7 @@
             }
             temp = this.change;
             this.change = this.change % this.money[i].val;
-            this.money[i].amount = Math.floor(temp / this.money[i].val);
+            this.money[i].amount = parseInt(temp / this.money[i].val);
             //check if the money object has a value in amount, print it if it does
             if(this.money[i].amount > 0){
               //document.write("<p>" + this.money[i].amount + " " + this.money[i].title +"</p>");
@@ -74,26 +83,32 @@
             }
           }
         }
-        
       };
-      
+      //This is where the onClick stuff happens after the answer object is created
       var due = document.getElementById("txtDue");
       var paid = document.getElementById("txtPaid");
+	  var totalDue = document.getElementById("grandTotal").innerText;
       
       if(!validateInput(due.value) || !validateInput(paid.value)){
         alert("Bad input value – use the format dd.dd (d = digit)");
         return;
       }
-      ans.change = changeRound(parseFloat(paid.value) - parseFloat(due.value));
+	  //convert everything to whole number cents (easier for calculations)
+	  due = parseInt(parseFloat(totalDue) * 100); //Gets the total plus tax to calculate the change of.
+	  paid = parseInt(parseFloat(paid.value) * 100);
+	  
+	  ans.change = paid - due;
       ans.getChange();
     };
-    
-   
    </script>
    <table>
      <tr>
        <td>Enter the amount due:</td>
-       <td>$<input type="text" id="txtDue" placeholder="example: 12.89" /></td>
+       <td>$<input type="text" id="txtDue" placeholder="example: 12.89" onfocusout="getTotal()"/></td>
+     </tr>
+	 <tr>
+       <td>Grand total based off 8% tax:</td>
+       <td>$<span id="grandTotal"></span></td>
      </tr>
      <tr>
        <td>Enter the amount paid:</td>
