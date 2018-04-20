@@ -2,6 +2,50 @@
  <!-- Calculates movie ticket price based of 3 pricing parameters-->
   <body>
    <script type="text/javascript">
+      var common = common || {};
+      common.GetRandomNumber = function(min, max){
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      };
+      
+      function PlaceBet(wallet){
+        var bet = getElementById("numBet").value;
+        if(!bet || bet > wallet || bet = 0){
+          alert("Bet must be between 1 and " + wallet);
+          //return;
+        }
+        return bet;
+      };
+      
+      function playCraps(){
+        var wallet = 500;
+        var bet, point, turn;
+        var stillPlaying = true;
+        
+        while(stillPlaying){
+          var first = true;
+          bet = PlaceBet(wallet);
+          var roll = rollDice();
+          if(roll != 7){
+            first = false;
+            point = roll;
+            roll = 0;
+            while(roll != 7 || roll != point){
+              roll = rollDice();
+            }
+          }
+          if(won(roll, point, first)){
+            wallet += bet * 2;
+          }
+          else{
+            wallet -= bet;
+          }
+         stillPlaying = PlayerPlaying();
+        }
+        OutMessage(wallet);
+        
+      };
       
    </script>
 
