@@ -1,7 +1,7 @@
 function MiniMax(){
-	this.board = ["0","0","0",
-				  "0","0","0",
-				  "0","0","0"];
+	this.board = ["x","o","x",
+				  "o","x","o",
+				  "x","o","0"];
 	
 	this.player = "x";
 	this.comp = "o";
@@ -22,12 +22,12 @@ function MiniMax(){
 		this.board[cell] = this.player;
 		if(this.checkWin(this.player)){
 			//Win and finish the game
-			Console.log(this.player + " wins");
+			console.log(this.player + " wins");
 			debugger;
 		}
 		else if(this.checkFullBoard(this.board)){
 			//the game is a tie!
-			Console.log("Tie");
+			console.log("Tie");
 			debugger;
 		}
 		return this.player;
@@ -42,14 +42,15 @@ function MiniMax(){
 	
 	this.getMax = function(state, score, marker){
 		if(this.checkWin(this.comp, state)){
-			return score += 10;
+			score += 10;
 		}
 		else if(this.checkWin(this.player, state)){
-			return score -= 10;
+			score -= 10;
 		}
 		else if(this.checkFullBoard(state)){
-			return score += 0;
+			score += 0;
 		}
+		
 
 		for(var i = 0; i < state.length; i++){
 			if(state[i] == "0"){
@@ -63,6 +64,7 @@ function MiniMax(){
 				}
 			}
 		}
+		return score;
 		
 	}
 	
@@ -74,12 +76,12 @@ function MiniMax(){
 		var states = [];
 		var score = 0;
 		var count = 0;
-		var curState = state;
+		var curState = state.slice(0);
 		for(var i = 0; i < state.length; i++){
 			if(state[i] == "0"){
 				count++;
 				state[i] = marker;
-				score = this.getMax(state, score, marker);
+				score = this.getMax(state.slice(0), score, marker);
 				states.push({st: state, sc: score});
 				console.log(state.join(',') + " : " + score);
 			}
@@ -89,12 +91,12 @@ function MiniMax(){
 		this.board = highest.st;
 		if(this.checkWin(marker)){
 			//Win and finish the game
-			Console.log(marker + " wins");
+			console.log(marker + " wins");
 			debugger;
 		}
 		else if(this.checkFullBoard(this.board)){
 			//the game is a tie!
-			Console.log("Tie");
+			console.log("Tie");
 			debugger;
 		}
 		
