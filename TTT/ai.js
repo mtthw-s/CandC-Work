@@ -85,13 +85,13 @@ var AI = function(){
 	};
 	
 	function takeMove(turn){
-		var avalible = game..currentState.emptyCells();
+		var avalible = game.currentState.emptyCells();
 		var avalibleActions = avalible.map(function(pos){
 			var action = new CompMove(pos);
 			var next = action.applyTo(game.currentState);
 			action.minimaxVal = minimaxVal(next);
 			return action;
-		};
+		});
 		if(turn == "x"){
 			avalibleActions.sort(CompMove.sortAscending);
 		}

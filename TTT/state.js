@@ -2,7 +2,7 @@ var State = function(old){
 	
 	this.turn = "";
 	this.oMovesCount = 0;
-	this.result = true;
+	this.result = "running";
 	this.board = [];
 	
 	if(old){
@@ -78,11 +78,18 @@ var State = function(old){
 		var B = this.board;
 		var marker = this.turn;
 		if(checkWin(marker, B)){
+			this.result = marker;
 			return true;
 		};
 		
 		var avalible = this.emptyCells();
-		
+		if(avalible.length == 0){
+			this.result = marker;
+			return true;
+		}
+		else{
+			return false;
+		}
 		
 	}
 	
