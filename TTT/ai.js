@@ -8,7 +8,7 @@ var CompMove = function(pos){
 		nextState.board[this.movePosition] = state.turn;
 		
 		if(state.turn == "o"){
-			next.oMovesCount++;
+			nextState.oMovesCount++;
 		}
 		nextState.advanceTurn();
 		
@@ -61,8 +61,8 @@ var AI = function(){
 			var avaliblePositions = state.emptyCells();
 			
 			var availibleNextStates = avaliblePositions.map(function(pos){
-				var action = new CompMove.applyTo(state);
-				var nextState = action.applyTo(state);
+				var action = new CompMove(pos);
+				var nextState = action.applyActionToState(state);
 				return nextState;
 			});
 			
@@ -88,7 +88,7 @@ var AI = function(){
 		var avalible = game.currentState.emptyCells();
 		var avalibleActions = avalible.map(function(pos){
 			var action = new CompMove(pos);
-			var next = action.applyTo(game.currentState);
+			var next = action.applyActionToState(game.currentState);
 			action.minimaxVal = minimaxVal(next);
 			return action;
 		});
@@ -98,8 +98,8 @@ var AI = function(){
 		else{
 			avalibleActions.sort(CompMove.sortDescending);
 		}
-		var choseAction = avalibleActions[0];
-		var next = chosenAction.applyTo(game.currentState);
+		var chosenAction = avalibleActions[0];
+		var next = chosenAction.applyActionToState(game.currentState);
 		//TODO insert UI action here
 		game.advanceTo(next);
 	};

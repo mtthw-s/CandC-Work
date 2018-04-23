@@ -7,29 +7,42 @@ var Game = function(computer){
         "0","0","0",
         "0","0","0"
     ];
-    this.currentState.turn = "x";
+    this.currentState.turn = "x";//"x";
     this.status = "begining";
 
     this.advanceTo = function(s){
         this.currentState = s;
-        if(s.isTerminal()){
+        if(s.GameOver()){
             this.status = "Ended"
             if(s.result == "x"){
-                console.log("X won");
+                alert("X won");
+                this.status = "ended";
+                return;
             }
-            else if(s.result == "x"){
-                console.log("O won");                
+            else if(s.result == "o"){
+                alert("O won"); 
+                this.status = "ended";
+                return;        
             }
             else{
-                console.log("draw");                
+                alert("draw");                
+                this.status = "ended";
+                return;
             }
         }
         else{
-            if(this.currentState == "x"){
+            if(this.currentState.turn == "x"){
                 //Human move
+                return;
+                var str = this.currentState.printBoard(true);
+                var input = prompt(str, this.currentState.printBoard(false));
+                this.currentState.board = input.split(',');
+                //this.currentState.turn = "o";
+                this.advanceTo(this.currentState);
+                //this.ai.move("x");                
             }
             else{
-                this.ai.move("x")
+                this.ai.move("o");
             }
         }
     };
@@ -38,6 +51,9 @@ var Game = function(computer){
         if(this.status == "begining"){
             this.advanceTo(this.currentState);
             this.status = "running";
+        }
+        while(this.status = "running"){
+            this.advanceTo(this.currentState);
         }
     }
 };

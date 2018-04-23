@@ -1,0 +1,16 @@
+<html>
+ <!-- Calculates movie ticket price based of 3 pricing parameters-->
+  <body>
+   <script type="text/javascript" src="state.js"></script>
+   <script type="text/javascript" src="ai.js"></script>
+   <script type="text/javascript" src="Game.js"></script>
+    <script>
+        var state = new State();
+        var ai = new AI();
+        var game = new Game(ai);
+        ai.plays(game);
+        //game.StartGame();
+    </script>
+
+ </body>
+</html>

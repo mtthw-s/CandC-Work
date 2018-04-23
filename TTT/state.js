@@ -22,9 +22,9 @@ var State = function(old){
 		else{
 			this.turn = "x";
 		}
-	}
+	};
 	
-	this.EmptyCells = function(){
+	this.emptyCells = function(){
 		var cellIndexes = [];
 		for(var i = 0; i < 9; i++){
 			if(this.board[i] == "0"){
@@ -32,7 +32,25 @@ var State = function(old){
 			}
 		}
 		return cellIndexes;
-	}
+	};
+
+	this.printBoard = function(newLine){
+		var str = "";
+		if(newLine){
+			var b = [this.board.slice(0, 3), this.board.slice(3, 6), this.board.slice(6, 9)];
+			for(var i = 0; i < b.length; i++){
+				for(var j = 0; j < b[i].length; j++){
+					str += b[i][j] + " ";
+				}
+				str += "\n";
+			}
+		}
+		else{
+			str = this.board.join(', ')
+		}
+		
+		return str;
+	};
 	
 	//checks any three cells to see if they match the given marker
 	function CheckThree(marker, c1, c2, c3, state){
