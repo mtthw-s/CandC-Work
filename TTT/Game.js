@@ -1,13 +1,20 @@
-var Game = function(computer){
+var Game = function(computer, state){
 
     this.ai = computer;
-    this.currentState = new State();
-    this.currentState.board = [
-        "0","0","0",
-        "0","0","0",
-        "0","0","0"
-    ];
-    this.currentState.turn = "x";//"x";
+    
+    if(state){
+        this.currentState = state;
+    }
+    else{
+        this.currentState = new State();
+        this.currentState.turn = "x";//"x";
+        this.currentState.board = [
+            "0","0","0",
+            "0","0","0",
+            "0","0","0"
+        ];
+    }
+    
     this.status = "begining";
 
     this.advanceTo = function(s){
