@@ -68,7 +68,7 @@ var AI = function(){
 			
 			availibleNextStates.forEach(function(nextState){
 				var nextScore = minimaxVal(nextState);
-				if(state.turn == "x"){
+				if(state.turn == "o"){
 					if(nextScore > stateScore){
 						stateScore = nextScore;
 					}
@@ -94,7 +94,7 @@ var AI = function(){
 			action.minimaxVal = minimaxVal(next);
 			return action;
 		});
-		if(turn == "x"){
+		if(turn == "o"){
 			avalibleActions.sort(CompMove.sortAscending);
 		}
 		else{
@@ -103,8 +103,8 @@ var AI = function(){
 		var chosenAction = avalibleActions[0];
 		var next = chosenAction.applyActionToState(game.currentState);
 		//TODO insert UI action here
-		//game.advanceTo(next);
-		return next;
+		return game.advanceTo(next);
+		//return next;
 	};
 	
 	this.plays = function(g){

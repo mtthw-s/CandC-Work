@@ -40,12 +40,13 @@ var Game = function(computer, state){
         else{
             if(this.currentState.turn == "x"){
                 //Human move
-                return;
-                var str = this.currentState.printBoard(true);
-                var input = prompt(str, this.currentState.printBoard(false));
-                this.currentState.board = input.split(',');
+                //return;
+                //var str = this.currentState.printBoard(true);
+                //var input = prompt(str, this.currentState.printBoard(false));
+                //this.currentState.board = input.split(',');
                 //this.currentState.turn = "o";
-                this.advanceTo(this.currentState);
+                //this.advanceTo(this.currentState);
+                return this.currentState;
                 //this.ai.move("x");                
             }
             else{
