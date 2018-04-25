@@ -83,8 +83,10 @@ var AI = function(){
 			return stateScore;
 		}
 	};
+
 	
-	function takeMove(turn){
+	
+	function takeMove(turn, g){
 		var avalible = game.currentState.emptyCells();
 		var avalibleActions = avalible.map(function(pos){
 			var action = new CompMove(pos);
@@ -101,7 +103,8 @@ var AI = function(){
 		var chosenAction = avalibleActions[0];
 		var next = chosenAction.applyActionToState(game.currentState);
 		//TODO insert UI action here
-		game.advanceTo(next);
+		//game.advanceTo(next);
+		return next;
 	};
 	
 	this.plays = function(g){
@@ -109,7 +112,7 @@ var AI = function(){
 	};
 	
 	this.move = function(turn){
-		takeMove(turn);
+		return takeMove(turn);
 	};
 	
 	
