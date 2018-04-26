@@ -3,7 +3,20 @@ var AI = function(s, m){
     var marker = m;
     this.performMove = function(){
         var possibleMoves = state.emptyCells();
-        var moveCell = GetWinningCell(possibleMoves);
+        var possibleStates = [];
+        var m = marker;
+        for(var i = 0; i < possibleMoves.length; i++){
+            var score = 0;
+            var count = 0;
+            possibleStates.push({move: possibleMoves[i], score: CalculateMove2(possibleMoves[i], score, state.board, marker, count)});
+            
+        }
+
+        possibleStates.sort(function(a,b){
+            return b.score - a.score;
+        });
+        var moveCell = possibleStates[0].move;
+        //var moveCell = GetWinningCell(possibleMoves);
         if(moveCell != null){
             state.board[moveCell] = marker;
             return state;
@@ -13,12 +26,58 @@ var AI = function(s, m){
             state.board[moveCell] = marker;
             return state;
         }
+        
         moveCell = CalculateMove(possibleMoves);
         if(moveCell != null){
             state.board[moveCell] = marker;
             return state;
         }
     };
+
+    var sortAscending = function(first, second){
+        if(first.score < second.score){
+            return -1;
+        }
+        else if(first.score > second.score){
+            return 1
+        }
+        else{
+            return 0;
+        }
+    };
+
+    var CalculateMove2 = function(move, score, brd, mark, count){
+        count++;
+        var newBoard = brd.slice(0);
+        newBoard[move] = mark;
+        if(state.CheckPlayerWon(mark, newBoard)){
+            if(mark == marker){
+                score += (10 - count);
+            }
+            else{
+                score -= (10 - count);
+            }
+        }
+        if(state.checkDraw(newBoard)){
+            score += 0;
+        }
+        var moves = state.emptyCells(newBoard);
+        if(mark == marker){
+            mark = "x";
+        }
+        else{
+            mark = marker;
+        }
+
+        for(var i = 0; i < moves.length; i++){
+            score += CalculateMove2(moves[i], score, newBoard, mark, count);
+        }
+        return score;
+
+
+    };
+
+    
 
     var GetWinningCell = function(moves){
         for(var i = 0; i < moves.length; i++){

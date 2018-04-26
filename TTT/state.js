@@ -25,10 +25,14 @@ var State = function(state){
         return draw(_board);
     }
 
-    this.emptyCells = function(){
+    this.emptyCells = function(b){
+        var brd = b;
+        if(!brd){
+            brd = this.board;
+        }
         var cellIndexes = [];
 		for(var i = 0; i < 9; i++){
-			if(this.board[i] == "_"){
+			if(brd[i] == "_"){
 				cellIndexes.push(i);
 			}
 		}
