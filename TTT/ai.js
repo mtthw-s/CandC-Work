@@ -41,10 +41,27 @@ var AI = function(s, m){
         }
         return null;
     };
+    var removeFrompossible = function(possible, cell){
+        var index = possible.indexOf(cell);
+        if (index > -1) {
+            possible.splice(index, 1);
+        }
+        return possible;
+    };
     //This needs work.  This should be the brains of the app
     var CalculateMove = function(moves){
         if(moves.includes(4)){
             return 4;
+        }
+        if(moves.includes(0) && moves.includes(8)){
+            moves = removeFrompossible(moves, 0);
+            moves = removeFrompossible(moves, 8);
+            CalculateMove(moves);
+        }
+        if(moves.includes(2) && moves.includes(6)){
+            moves = removeFrompossible(moves, 2);
+            moves = removeFrompossible(moves, 6);
+            CalculateMove(moves);
         }
         return moves[GetRandomNumber(moves.length - 1)];
     }
