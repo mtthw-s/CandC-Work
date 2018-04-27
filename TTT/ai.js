@@ -17,18 +17,18 @@ var AI = function(s, m){
         });
         var moveCell = possibleStates[0].move;
         //var moveCell = GetWinningCell(possibleMoves);
-        if(moveCell != null){
+        if(moveCell !== null){
             state.board[moveCell] = marker;
             return state;
         }
         moveCell = GetBlockingCell(possibleMoves);
-        if(moveCell != null){
+        if(moveCell !== null){
             state.board[moveCell] = marker;
             return state;
         }
         
         moveCell = CalculateMove(possibleMoves);
-        if(moveCell != null){
+        if(moveCell !== null){
             state.board[moveCell] = marker;
             return state;
         }
