@@ -47,7 +47,9 @@ var AI = function(s, m){
     };
 
     var CalculateMove2 = function(move, score, brd, mark, count){
-        count++;
+        if(mark == marker){
+            count++;
+        }
         var newBoard = brd.slice(0);
         newBoard[move] = mark;
         if(state.CheckPlayerWon(mark, newBoard)){
@@ -60,6 +62,9 @@ var AI = function(s, m){
         }
         if(state.checkDraw(newBoard)){
             score += 0;
+        }
+        if(count == 3){
+            return score;
         }
         var moves = state.emptyCells(newBoard);
         if(mark == marker){
