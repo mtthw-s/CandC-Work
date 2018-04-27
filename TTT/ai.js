@@ -8,7 +8,7 @@ var AI = function(s, m){
         for(var i = 0; i < possibleMoves.length; i++){
             var score = 0;
             var count = 0;
-            possibleStates.push({move: possibleMoves[i], score: CalculateMove2(possibleMoves[i], score, state.board, marker, count)});
+            possibleStates.push({move: possibleMoves[i], score: GetMinimax(possibleMoves[i], score, state.board, marker, count)});
             
         }
 
@@ -21,32 +21,20 @@ var AI = function(s, m){
             state.board[moveCell] = marker;
             return state;
         }
-        moveCell = GetBlockingCell(possibleMoves);
-        if(moveCell !== null){
-            state.board[moveCell] = marker;
-            return state;
-        }
+        //moveCell = GetBlockingCell(possibleMoves);
+        //if(moveCell !== null){
+            //state.board[moveCell] = marker;
+            //return state;
+        //}
         
-        moveCell = CalculateMove(possibleMoves);
-        if(moveCell !== null){
-            state.board[moveCell] = marker;
-            return state;
-        }
+        //moveCell = CalculateMove(possibleMoves);
+        //if(moveCell !== null){
+            //state.board[moveCell] = marker;
+            //return state;
+        //}
     };
 
-    var sortAscending = function(first, second){
-        if(first.score < second.score){
-            return -1;
-        }
-        else if(first.score > second.score){
-            return 1
-        }
-        else{
-            return 0;
-        }
-    };
-
-    var CalculateMove2 = function(move, score, brd, mark, count){
+    var GetMinimax = function(move, score, brd, mark, count){
         if(mark == marker){
             count++;
         }
@@ -75,7 +63,7 @@ var AI = function(s, m){
         }
 
         for(var i = 0; i < moves.length; i++){
-            score += CalculateMove2(moves[i], score, newBoard, mark, count);
+            score += GetMinimax(moves[i], score, newBoard, mark, count);
         }
         return score;
 
