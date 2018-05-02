@@ -1,0 +1,56 @@
+<html>
+ <!-- Calculates movie ticket price based of 3 pricing parameters-->
+  <body>
+   <script type="text/javascript">
+      function FirstWay(){
+        //var start = Date.now();
+        for(var first = 0; first < 100; first++){
+            for(var second = 0; second < 100; second++){
+                for(var third = 0; third < 100; third++){
+                     for(var fourth = 0; fourth < 100; fourth++){
+                       if(second == (first * 4) && third == (first + second) && first == (fourth - third) && (first + fourth) == (second + third - 4)){
+                         document.writeln("Slow Way: " + first + " " + second + " " + third + " " + fourth);
+                       }
+                      }
+                }
+            }
+        }
+        //document.write("Time: " + Date.now() - start);
+      }
+      function secondN(f){
+        return f * 4;
+      }
+      function thirdN(f, s){
+        return f + s;
+      }
+      function fourthN(f, t){
+        return f + t;
+      }
+      function verify(frst, s, t, f){
+        if(frst * 4 == s && t == (frst + s) && frst == (f - t) && (frst + f) == (s + t -4)){
+          return true;
+        }
+        else{
+          return false;
+        }
+      }
+      function SecondWay(){
+        //var start = Date.now();
+        for(var i = 0; i < 100; i++){
+          var second = secondN(i);
+          var third = thirdN(i, second);
+          var fourth = fourthN(i, third);
+          if(verify(i, second, third, fourth)){
+            document.writeln("Fast Way: " + i + " " + second + " " + third + " " + fourth);
+            //console.log(i + " " + second + " " + third + " " + fourth);
+          }
+        }
+        //document.write("Time: " + (Date.now() - start).toString());
+        
+      }
+      SecondWay();
+      document.write("</br>");
+      FirstWay();
+   </script>
+ </body>
+</html>
