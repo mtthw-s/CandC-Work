@@ -2,12 +2,12 @@
  <!-- Calculates movie ticket price based of 3 pricing parameters-->
   <body>
    <script type="text/javascript">
-      function FirstWay(){
-        //var start = Date.now();
-        for(var first = 0; first < 100; first++){
-            for(var second = 0; second < 100; second++){
-                for(var third = 0; third < 100; third++){
-                     for(var fourth = 0; fourth < 100; fourth++){
+      function FirstWay(max){
+        var start = Date.now();
+        for(var first = 0; first < max; first++){
+            for(var second = 0; second < max; second++){
+                for(var third = 0; third < max; third++){
+                     for(var fourth = 0; fourth < max; fourth++){
                        if(second == (first * 4) && third == (first + second) && first == (fourth - third) && (first + fourth) == (second + third - 4)){
                          document.writeln("Slow Way: " + first + " " + second + " " + third + " " + fourth);
                        }
@@ -15,7 +15,7 @@
                 }
             }
         }
-        //document.write("Time: " + Date.now() - start);
+        document.write("Time: " + (Date.now() - start));
       }
       function secondN(f){
         return f * 4;
@@ -35,22 +35,21 @@
         }
       }
       function SecondWay(){
-        //var start = Date.now();
+        var start = Date.now();
         for(var i = 0; i < 100; i++){
           var second = secondN(i);
           var third = thirdN(i, second);
           var fourth = fourthN(i, third);
           if(verify(i, second, third, fourth)){
             document.writeln("Fast Way: " + i + " " + second + " " + third + " " + fourth);
-            //console.log(i + " " + second + " " + third + " " + fourth);
           }
         }
-        //document.write("Time: " + (Date.now() - start).toString());
+        document.write("Time: " + (Date.now() - start));
         
       }
       SecondWay();
       document.write("</br>");
-      FirstWay();
+      FirstWay(100);
    </script>
  </body>
 </html>
