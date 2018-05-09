@@ -8,8 +8,8 @@
             for(var second = 0; second < max; second++){
                 for(var third = 0; third < max; third++){
                      for(var fourth = 0; fourth < max; fourth++){
-                       if(second == (first * 4) && third == (first + second) && first == (fourth - third) && (first + fourth) == (second + third - 4)){
-                         document.writeln("Slow Way: " + first + " " + second + " " + third + " " + fourth);
+                       if(second == (first * 2 + 4) && third == (first + second) && first == (fourth - third) && (first + fourth) == (second + third - 4)){
+                         document.writeln("Slow Way: " + first + " " + second + " " + third + " " + fourth  + "</br>");
                        }
                       }
                 }
@@ -18,7 +18,7 @@
         document.write("Time: " + (Date.now() - start));
       }
       function secondN(f){
-        return f * 4;
+        return f * 2 + 4;
       }
       function thirdN(f, s){
         return f + s;
@@ -27,7 +27,7 @@
         return f + t;
       }
       function verify(frst, s, t, f){
-        if(frst * 4 == s && t == (frst + s) && frst == (f - t) && (frst + f) == (s + t -4)){
+        if(frst * 2 + 4 == s && t == (frst + s) && frst == (f - t) && (frst + f) == (s + t -4)){
           return true;
         }
         else{
@@ -41,7 +41,7 @@
           var third = thirdN(i, second);
           var fourth = fourthN(i, third);
           if(verify(i, second, third, fourth)){
-            document.writeln("Fast Way: " + i + " " + second + " " + third + " " + fourth);
+            document.writeln("Fast Way: " + i + " " + second + " " + third + " " + fourth + "</br>");
           }
         }
         document.write("Time: " + (Date.now() - start));
