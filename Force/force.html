@@ -3,19 +3,21 @@
   <body>
    <script type="text/javascript">
       function FirstWay(max){
-        var start = Date.now();
+	  var count = 0;
+        //var start = Date.now();
         for(var first = 0; first < max; first++){
             for(var second = 0; second < max; second++){
                 for(var third = 0; third < max; third++){
                      for(var fourth = 0; fourth < max; fourth++){
                        if(second == (first * 2 + 4) && third == (first + second) && first == (fourth - third) && (first + fourth) == (second + third - 4)){
-                         document.writeln("Slow Way: " + first + " " + second + " " + third + " " + fourth  + "</br>");
+						count++;
+                         document.writeln("(" + count + ") " + first + " " + second + " " + third + " " + fourth  + "</br>");
                        }
                       }
                 }
             }
         }
-        document.write("Time: " + (Date.now() - start));
+        //document.write("Time: " + (Date.now() - start));
       }
       function secondN(f){
         return f * 2 + 4;
@@ -34,22 +36,29 @@
           return false;
         }
       }
-      function SecondWay(){
-        var start = Date.now();
-        for(var i = 0; i < 100; i++){
+      function SecondWay(limit){
+        var count = 0;
+        for(var i = 0; i < limit; i++){
           var second = secondN(i);
           var third = thirdN(i, second);
           var fourth = fourthN(i, third);
           if(verify(i, second, third, fourth)){
-            document.writeln("Fast Way: " + i + " " + second + " " + third + " " + fourth + "</br>");
+			count++;
+            document.writeln("(" + count + ") " + i + " " + second + " " + third + " " + fourth + "</br>");
           }
         }
-        document.write("Time: " + (Date.now() - start));
+        //document.write("Time: " + (Date.now() - start));
         
       }
-      SecondWay();
-      document.write("</br>");
+	  document.write("Start Fast way:</br>");
+	  var start = Date.now();
+	  SecondWay(1000);
+	  document.write("End Fast Way " + ((Date.now() - start)/1000) + " seconds</br>");
+	  document.write("</br>");
+	  start = Date.now();
+	  document.write("Start Slow Way:</br>");
       FirstWay(100);
+	  document.write("End Slow Way " + ((Date.now() - start)/1000) + " seconds</br>");
    </script>
  </body>
 </html>
