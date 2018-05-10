@@ -1,8 +1,10 @@
 <html>
- <!-- Calculates movie ticket price based of 3 pricing parameters-->
+ <!-- Finds for numbers matching some interesting conditions
+      Does it in two ways: a slow 4x for loops; a faster 1x for loop
+ -->
   <body>
    <script type="text/javascript">
-      function FirstWay(max){
+      function SlowWay(max){
 	  var count = 0;
         //var start = Date.now();
         for(var first = 0; first < max; first++){
@@ -36,7 +38,7 @@
           return false;
         }
       }
-      function SecondWay(limit){
+      function FastWay(limit){
         var count = 0;
         for(var i = 0; i < limit; i++){
           var second = secondN(i);
@@ -52,12 +54,12 @@
       }
 	  document.write("Start Fast way:</br>");
 	  var start = Date.now();
-	  SecondWay(1000);
+	  FastWay(1000);
 	  document.write("End Fast Way " + ((Date.now() - start)/1000) + " seconds</br>");
 	  document.write("</br>");
 	  start = Date.now();
 	  document.write("Start Slow Way:</br>");
-      FirstWay(100);
+      SlowWay(100);
 	  document.write("End Slow Way " + ((Date.now() - start)/1000) + " seconds</br>");
    </script>
  </body>
