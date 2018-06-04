@@ -4,7 +4,7 @@ var CompMove = function(pos){
 	this.minimaxVal = 0;
 	
 	this.applyActionToState = function(state){
-		var nextState = new State(state);
+		var nextState = new TTTState(state);
 		nextState.board[this.movePosition] = state.turn;
 		
 		if(state.turn == "o"){

@@ -10,13 +10,13 @@ var getCurrentBoard = function(){
 var UserClicked = function(ele){
     //ele.value = "x";
     currentBoard = getCurrentBoard();
-    var state = new State();
+    var state = new TTTState();
     state.board = currentBoard;
     state.turn = "x"
     var user = new User(state);
     var state = user.markCell(ele);
-    var ui = new UI();
-    var ai = new AI();
+    var ui = new TTTUI();
+    var ai = new TTTAI();
     var game = new Game(ai, state);
     ai.plays(game);
     state = ai.move("o");

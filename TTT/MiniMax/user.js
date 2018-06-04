@@ -4,7 +4,7 @@ var User = function(state){
         this.currentState = state;
     }
     else{
-        this.currentState = new State();
+        this.currentState = new TTTState();
         this.currentState.turn = "x";//"x";
         this.currentState.board = [
             "0","0","0",
